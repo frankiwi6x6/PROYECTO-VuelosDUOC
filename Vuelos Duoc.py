@@ -11,7 +11,7 @@ def guiones():
 
 bancos=["bancoDUOC","Banco Credito e Inversiones (BCI)","Banco de Chile", "Banco Estado", "Banco Edwards", "Otro"]
 #Registro de usuarios
-rUser=[[21233110, 4, "Franco Reyes", 989700587, 1, 4], #DEBE SER UNA LISTA DE 6x42, SI ES UN
+rUser=[[None, None, None, None, None, None], #DEBE SER UNA LISTA DE 6x42, SI ES UN
        [None, None, None, None, None, None], #ARREGLO NO SE PUEDEN COLOCAR VARIABLES TIPO STRING
        [None, None, None, None, None, None],
        [None, None, None, None, None, None],
