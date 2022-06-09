@@ -1,21 +1,20 @@
-import numpy as np
 #IMPORTANTE, AL MOMENTO DE INGRESAR UN DATO Y RETORNE 'VALUEERROR', SE ENVIA AL MENU PRINCIPAL, SIN AGREGAR LOS DATOS A LA LISTA.
 #SI ESCRIBE 6 EN EL MENU PRINCIPAL, LE MUESTRA LA LISTA DE LOS USUARIOS, PARA VERIFICAR QUE ESTÉN AGREGANDOSE CORRECTAMENTE.
 
-cAst=55                                                                     #CAMBIAR ESTO PARA LA CANTIDAD DE ASTERISKOS QUE HAYA EN EL MENU DE ASIENTOS
-def asteriskos():                   #FUNCION PARA CREAR UNA LINEA DE ASTERISKOS.
+cAst=50                                             #CAMBIAR ESTO PARA LA CANTIDAD DE ASTERISKOS QUE HAYA EN EL MENU DE ASIENTOS
+def asteriskos():                                   #FUNCION PARA CREAR UNA LINEA DE ASTERISKOS.
     print ("*"*cAst)
-cG=55                               #CANTIDAD DE GUIONES
+cG=50                                               #CANTIDAD DE GUIONES
 def guiones():
     print("-"*cG)
 
-#bancos
-
+#BANCOS
 bancos=["bancoDUOC","Banco Credito e Inversiones (BCI)","Banco de Chile", "Banco Estado", "Banco Edwards", "Otro"]
+
 #Registro de usuarios
-rUser=[[None, None, None, None, None, None], #DEBE SER UNA LISTA DE 6x42, SI ES UN
-       [None, None, None, None, None, None], #ARREGLO NO SE PUEDEN COLOCAR VARIABLES TIPO STRING
-       [None, None, None, None, None, None],
+rUser=[[None, None, None, None, None, None],        #DEBE SER UNA LISTA DE 6x42, SI ES UN
+       [None, None, None, None, None, None],        #ARREGLO NO SE PUEDEN COLOCAR VARIABLES TIPO STRING
+       [None, None, None, None, None, None],        #AL ALMACENAR DATOS, SE ORDENAN POR, (RUT, DV, NOMBRE, NUMERO TELEFONICO, NUMERO DE BANCO Y ASIENTO)
        [None, None, None, None, None, None],
        [None, None, None, None, None, None],
        [None, None, None, None, None, None],
@@ -77,7 +76,7 @@ print ("***Bienvenido a Vuelos-Duoc.***")
 try:
     while exe==1:
         try: 
-            op=int(input(f"\t\tMENU\n1. Ver asientos disponibles\n2. Comprar asiento\n3. Anular vuelo\n4. Modificar datos de pasajero\n5. Salir\nIngrese su respuesta: "))
+            op=int(input(f"\t\tMENU\n1. Ver asientos disponibles\n2. Comprar asiento\n3. Anular vuelo\n4. Modificar datos de pasajero\n5. Mostrar a los usuarios registrados.\n6. Salir\nIngrese su respuesta: "))
             cDatos=0
             cDV=0
         
@@ -99,7 +98,10 @@ try:
                                     guiones()
                                     print ("\t\t[ASIENTOS VIP]")
                                     guiones()
+                                    
                             print(" ")
+                        print(" ")
+                        print(" ")
                         break
                     elif op==2:
                         if cDatos==0:  
@@ -107,7 +109,7 @@ try:
                                 rutPasajero=int(input("Ingrese su rut sin digito verificador: "))
                                 if rutPasajero>99999999:
                                     print("RUT no valido, intentelo nuevamente.")
-                                else:                    
+                                else:  
                                     dvPasajero=str(input("Ingrese su DV: "))
                                     cDV=0
                                     for i in dvPasajero:
@@ -128,12 +130,14 @@ try:
                             else:
                                 print("Campo vacio, ingrese nuevamente su nombre.")
                         elif cDatos==2:
-                            fonoPasajero=str(input("Ingrese su numero telefónico: "))
+                            fonoPasajero=str(input("Ingrese su numero telefónico (8 digitos): +56 9"))
                             cFono=0
                             for i in fonoPasajero:
                                 cFono+=1
-                            if cFono>0:
+                            if cFono==8:
                                 cDatos+=1
+                            elif cFono!=8 and cFono!=0:
+                                print("Error, número fuera de rango.\nInténtelo nuevamente.\n")
                             else:
                                 print("Campo vacio, ingrese nuevamente su telefono.")
                         elif cDatos==3:
@@ -147,7 +151,10 @@ try:
                             if bancoPasajero==6:
                                 otroBanco=str(input("Ingrese el nombre del banco: "))
                                 bancos.append(otroBanco)
-                            cDatos+=1
+                            if bancoPasajero>1 and bancoPasajero<=c:
+                                cDatos+=1
+                            else:
+                                print("Numero fuera de rango, intentelo nuevamente.")
                         elif cDatos==4:
                             print("\t\tAsientos disponibles.")
                             asteriskos()
@@ -164,6 +171,8 @@ try:
                                         print ("\t\t[ASIENTOS VIP]")
                                         guiones()
                                 print(" ")
+                            print(" ")
+                            print(" ")
                             cDatos+=1
                         elif cDatos==5:
                             asientoPasajero=int(input("Ingrese el asiento que desea ocupar: "))
@@ -225,35 +234,41 @@ try:
                         
                     if op==3:
                         print("Usted decidio anular el vuelo.")
-                        RUTanularAsiento=int(input("Ingrese su RUT sin digito verificador: "))
-                        #print(user)
-                        solved=0
-                        for x in range(42):
-                            for y in range(6):
-                                if RUTanularAsiento==rUser[x][y]:
-                                    eAsiento=rUser[x][-1]
-                                    print(f"Asiento a eliminar {eAsiento}")
-                                    for j in range(7):
-                                        for l in range(6):
-                                            if asientos[j][l]=="X" and (asientos[j][l-1]==eAsiento-1 or asientos[j-1][-1]==eAsiento-1 or asientos[j][l+1]==eAsiento+1):
-                                                asientos[j][l]=eAsiento
-                                    for i in range(6):
-                                        rUser[x][i]=None
-                                    guiones()
-                                    print(f"Se han eliminado los datos del usuario [{x+1}] correctamente, el asiento quedara libre.")
-                                    guiones()
-                                    solved=1
-                        if solved==0:
-                            print(" ")
-                            asteriskos()
-                            print("No se ha encontrado ningun asiento asociado a ese RUT.\n")
-                            asteriskos()
-                        
-                                    
-                        break
+                        try:
+                            RUTanularAsiento=int(input("Ingrese su RUT sin digito verificador: "))
+                            #print(user)
+                            solved=0
+                            for x in range(42):
+                                for y in range(6):
+                                    if RUTanularAsiento==rUser[x][y]:
+                                        eAsiento=rUser[x][-1]
+                                        print(f"Asiento a eliminar {eAsiento}")
+                                        for j in range(7):
+                                            for l in range(6):
+                                                if asientos[j][l]=="X" and (asientos[j][l-1]==eAsiento-1 or asientos[j-1][-1]==eAsiento-1 or asientos[j][l+1]==eAsiento+1):
+                                                    asientos[j][l]=eAsiento
+                                        for i in range(6):
+                                            rUser[x][i]=None
+                                        guiones()
+                                        print(f"Se han eliminado los datos del usuario [{x+1}] correctamente, el asiento quedará libre.")
+                                        guiones()
+                                        solved=1
+                            if solved==0:
+                                print(" ")
+                                asteriskos()
+                                print("No se ha encontrado ningún asiento asociado a ese RUT.\n")
+                                asteriskos()
+                            
+                                        
+                            break
+                        except ValueError:
+                            print("Ingrese el RUT (Valor Entero)")
+                        except NameError:
+                            print("No existe información asociada a ese RUT.")
+
                     if op==4:       #OPCION MODIFICAR DATOS.
                         modSolved=0
-                        print("Usted seleccionó la opcion MODIFICAR\n*Escriba \"(-13)\", sin los parentesis para volver al menu principal*")
+                        print("Usted seleccionó la opcion MODIFICAR\n*Escriba \"(-13)\", sin los paréntesis para volver al menu principal*")
                         guiones()
                         mRUT=int(input("Ingrese su RUT: "))
                         if mRUT!=-13:
@@ -280,7 +295,7 @@ try:
                                                 else:
                                                     print("Campo vacío intente nuevamente.")
                                             elif modif==2:
-                                                print(f"El numero telefonico registrado anteriormente era: {(rUser[x][3])}.")
+                                                print(f"El número telefónico registrado anteriormente era: {(rUser[x][3])}.")
                                                 mFono=str(input("Ingrese su nuevo número telefónico: "))
                                                 cMFONO=0
                                                 for letras in mFono:
@@ -290,26 +305,42 @@ try:
                                                     rUser[x][3]=mFono
                                                     modSolved=1
                                                     break
-
+                                    
                                             
                                         else:
                                             print("VALOR SELECCIONADO FUERA DE RANGO OFRECIDO, INTÉNTELO NUEVAMENTE")
+                                    break    
                             if modSolved==0:
                                 asteriskos()
                                 print ("No se han encontrado informacion asociada a ese RUT y/o ASIENTO")
                                 asteriskos()
-                            
+                                
                         else:
                             break
-                        
                     if op==5:
-                        exe=0
+                        uMostrados=0
+                        print("\tUSUARIOS REGISTRADOS")
+                        guiones()
+                        for x in range(42):
+                            for y in range(6):
+                                if rUser[x][y]!=None:
+                                    print (f"{rUser[x][y]}, ",end="")
+                                    print("",end="")
+                                    
+                                    uMostrados+=1
+                        
+                        if uMostrados==0:
+                            print("No hay usuarios para mostrar")
+                        print("")
+                        guiones()    
+                        print(" ")
+                        print(" ")
                         break
                     if op==6:
-                        print(rUser)
+                        exe=0
                         break
-                else:
-                    print("OPCION FUERA DE RANGO, INTENTE NUEVAMENTE")
+            else:
+                print("[Opción fuera de rango.]\nIntente nuevamente.")
         except ValueError:
             guiones()
             print("***ERROR***\nCampo vacío, o Error de Valor.")
