@@ -151,7 +151,7 @@ try:
                             if bancoPasajero==6:
                                 otroBanco=str(input("Ingrese el nombre del banco: "))
                                 bancos.append(otroBanco)
-                            if bancoPasajero>1 and bancoPasajero<=c:
+                            if bancoPasajero>=1 and bancoPasajero<c:
                                 cDatos+=1
                             else:
                                 print("Numero fuera de rango, intentelo nuevamente.")
@@ -233,11 +233,15 @@ try:
                         
                         
                     if op==3:
-                        print("Usted decidio anular el vuelo.")
+                        print("***Usted decidio anular el vuelo.***")
                         try:
                             RUTanularAsiento=int(input("Ingrese su RUT sin digito verificador: "))
                             #print(user)
                             solved=0
+                        except ValueError:
+                            print("Ingrese el RUT (Valor Entero)")
+                        
+                        try:
                             for x in range(42):
                                 for y in range(6):
                                     if RUTanularAsiento==rUser[x][y]:
@@ -261,62 +265,65 @@ try:
                             
                                         
                             break
-                        except ValueError:
-                            print("Ingrese el RUT (Valor Entero)")
+                        
+                        
                         except NameError:
                             print("No existe información asociada a ese RUT.")
 
                     if op==4:       #OPCION MODIFICAR DATOS.
-                        modSolved=0
-                        print("Usted seleccionó la opcion MODIFICAR\n*Escriba \"(-13)\", sin los paréntesis para volver al menu principal*")
-                        guiones()
-                        mRUT=int(input("Ingrese su RUT: "))
-                        if mRUT!=-13:
-                            mASIENTO=int(input("Ingrese su ASIENTO: "))
-                            for x in range(42):
-                                cMOD=0
-                                if mRUT==rUser[x][0] and mASIENTO==rUser[x][-1]:
-                                    print("\t\tSUBMENÚ MODIFICACIONES.\n1. NOMBRE.\n2. NÚMERO TELEFÓNICO.\n3. VOLVER AL MENU PRINCIPAL.")
-                                    modif=int(input("Ingrese su respuesta: "))
-                                    cMOD+=1
-                                    while cMOD==1:
-                                        if modif>=1 and modif<=3:
-                                            if modif==1:
-                                                print(f"El nombre registrado anteriormente era: {(rUser[x][2])}.")
-                                                mNombre=str(input("Ingrese su nuevo nombre: "))
-                                                cMNOMBRE=0
-                                                for letras in mNombre:
-                                                    cMNOMBRE+=1
-                                                if cMNOMBRE>=1:
-                                                    cMOD+=1
-                                                    rUser[x][2]=mNombre
-                                                    modSolved=1
-                                                    break
-                                                else:
-                                                    print("Campo vacío intente nuevamente.")
-                                            elif modif==2:
-                                                print(f"El número telefónico registrado anteriormente era: {(rUser[x][3])}.")
-                                                mFono=str(input("Ingrese su nuevo número telefónico: "))
-                                                cMFONO=0
-                                                for letras in mFono:
-                                                    cMFONO+=1
-                                                if cMFONO>=1:
-                                                    cMOD+=1
-                                                    rUser[x][3]=mFono
-                                                    modSolved=1
-                                                    break
+                        try:
+                            modSolved=0
+                            print("Usted seleccionó la opcion MODIFICAR\n*Escriba \"(-13)\", sin los paréntesis para volver al menu principal*")
+                            guiones()
+                            mRUT=int(input("Ingrese su RUT: "))
+                            if mRUT!=-13:
+                                mASIENTO=int(input("Ingrese su ASIENTO: "))
+                                for x in range(42):
+                                    cMOD=0
+                                    if mRUT==rUser[x][0] and mASIENTO==rUser[x][-1]:
+                                        print("\t\tSUBMENÚ MODIFICACIONES.\n1. NOMBRE.\n2. NÚMERO TELEFÓNICO.\n3. VOLVER AL MENU PRINCIPAL.")
+                                        modif=int(input("Ingrese su respuesta: "))
+                                        cMOD+=1
+                                        while cMOD==1:
+                                            if modif>=1 and modif<=3:
+                                                if modif==1:
+                                                    print(f"El nombre registrado anteriormente era: {(rUser[x][2])}.")
+                                                    mNombre=str(input("Ingrese su nuevo nombre: "))
+                                                    cMNOMBRE=0
+                                                    for letras in mNombre:
+                                                        cMNOMBRE+=1
+                                                    if cMNOMBRE>=1:
+                                                        cMOD+=1
+                                                        rUser[x][2]=mNombre
+                                                        modSolved=1
+                                                        break
+                                                    else:
+                                                        print("Campo vacío intente nuevamente.")
+                                                elif modif==2:
+                                                    print(f"El número telefónico registrado anteriormente era: {(rUser[x][3])}.")
+                                                    mFono=str(input("Ingrese su nuevo número telefónico: "))
+                                                    cMFONO=0
+                                                    for letras in mFono:
+                                                        cMFONO+=1
+                                                    if cMFONO>=1:
+                                                        cMOD+=1
+                                                        rUser[x][3]=mFono
+                                                        modSolved=1
+                                                        break
+                                            else:
+                                                print("VALOR SELECCIONADO FUERA DE RANGO OFRECIDO, INTÉNTELO NUEVAMENTE")
+                                        break    
+                                if modSolved==0:
+                                    asteriskos()
+                                    print ("No se han encontrado informacion asociada a ese RUT y/o ASIENTO")
+                                    asteriskos()
                                     
-                                            
-                                        else:
-                                            print("VALOR SELECCIONADO FUERA DE RANGO OFRECIDO, INTÉNTELO NUEVAMENTE")
-                                    break    
-                            if modSolved==0:
-                                asteriskos()
-                                print ("No se han encontrado informacion asociada a ese RUT y/o ASIENTO")
-                                asteriskos()
+                            else:
+                                print(" ")
                                 
-                        else:
                             break
+                        except ValueError:
+                            print("Error de valor, intentelo de nuevo.")
                     if op==5:
                         uMostrados=0
                         print("\tUSUARIOS REGISTRADOS")
